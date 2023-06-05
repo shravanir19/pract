@@ -1,0 +1,128 @@
+#include<iostream>
+#include<string.h>
+#include<fstream>
+using namespace std;
+class employee
+{
+	public:
+		
+	int emp_id;
+	char name[30];
+	int salary;
+	char designation[30];
+	
+	void getData()
+	{
+		cout<<"
+Enter Employee Id :";
+		cin>>emp_id;
+		cout<<"
+Enter Employee Name :";
+		cin>>name;
+		cout<<"
+Enter Employee Designation:";
+		cin>>designation;
+		cout<<"
+Enter Employee salary :";
+		cin>>salary;
+	}
+};
+int main()
+{
+	employee emp;
+	ifstream fin;
+	ofstream fout;
+	int choice,flag,result;
+	char str[30] ;
+	
+	do{
+		cout<<"
+********MENU*********";
+		cout<<"
+1.Insert
+2.Delete
+3.Display
+4.Exit
+";
+		cout<<"
+Enter choice : ";
+		cin>>choice;
+		
+		switch(choice)
+		{
+			case 1:fout.open("Emp.txt",ios::app);
+			       emp.getData();
+		           fout<<"
+"<<emp.emp_id<<"\t"<<emp.name<<"\t"<<emp.designation<<"\t"<<emp.salary;
+		           fout.close();
+			       break;
+			case 2:fin.open("Emp.txt");
+        	       if(fin==0)
+        	       {
+        	       	  cout<<"
+Add Record First !!!";
+        	       	  break;
+				   }
+				   fout.open("Temp.txt");
+				   cout<<"
+Enter name for delete record : ";
+				   cin>>str;
+				   flag=0;
+				   while(1)
+				   {
+				   	  fin>>emp.emp_id>>emp.name>>emp.designation>>emp.salary;
+			   	    
+				   	  result=stricmp(emp.name,str);
+				   	  if(result==0)
+				   	     flag=1;
+				   	  else
+				   	     fout<<"
+"<<emp.emp_id<<"\t"<<emp.name<<"\t"<<emp.designation<<"\t"<<emp.salary;
+				   	  
+				   	  if(fin.eof())
+				   	     break;
+				   }
+				   if(flag==0)
+				      cout<<str<<" Record Not Found !!!";
+				   else
+				      cout<<str<<" Record Deleted !!!";
+				      
+				    fin.close();
+				    fout.close();
+				    remove("Emp.txt");
+				    rename("Temp.txt","Emp.txt");
+			       break;
+			case 3:fin.open("Emp.txt");
+			       if(fin==0)
+        	       {
+        	       	  cout<<"
+Add Record First !!!";
+        	       	  break;
+				   }
+				   cout<<"
+Emp_ID\tName\tDesignation\tSalary";
+				   while(1)
+				   {
+				   	  fin>>emp.emp_id>>emp.name>>emp.designation>>emp.salary;
+		     
+				   	  cout<<"
+"<<emp.emp_id<<"\t"<<emp.name<<"\t"<<emp.designation<<"\t"<<emp.salary;
+				   	  
+				   	  if(fin.eof())
+				   	     break;
+				   	  
+				   }
+				   fin.close();
+			       break;
+			case 4:cout<<"
+Thanks for using !!!";
+			       break;
+		    default:cout<<"
+Invalid Choice !!!";
+			        break;   	
+		}
+		
+	}while(choice!=4);
+	
+	return 0;
+}

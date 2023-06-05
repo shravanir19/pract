@@ -1,0 +1,81 @@
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+
+class patient
+{public:
+    int p;
+    string n;
+
+    patient(string n,int p)
+    {
+        this->p = p;
+        this->n = n;
+    }
+};
+
+class hospital
+{
+    private:
+    vector<patient> patients;
+    public:
+    void insert(string n ,int p)
+    {
+        patients.push_back(patient(n,p));
+    }
+
+    void sort()
+    {
+        for(int i=0;i<patients.size();i++)
+        {
+            for(int j=0;j<patients.size()-i-1;j++)
+            {
+                if(patients[j].p>patients[j+1].p)
+                {
+                   swap(patients[j],patients[j+1]);
+                }
+            }
+        }
+    }
+
+    void display()
+    {
+        cout<<" Name\t "<<"Priority\t "<<"ward"<<endl;
+        for(const patient& patient : patients)
+        {
+            cout<<patient.n<<" \t "<<patient.p<<" \t\t ";
+            if(patient.p==1)
+            cout<<"ICU"<<endl;
+            else if(patient.p==2)
+            cout<<"ER"<<endl;
+            else
+            cout<<"general"<<endl;
+        }
+    }
+};
+
+int main()
+{
+     int n;
+    cout << "Enter the number of patients: ";
+    cin >> n;
+
+    hospital hospital;
+
+    for (int i = 0; i < n; i++) {
+        string n;
+        int p;
+        cout << "Enter name of patient: ";
+        cin >> n;
+        cout << "Enter the priority of patient " << n << " (1 - Serious, 2 - Non-serious, 3 - General Checkup) : ";
+        cin >> p;
+
+        hospital.insert(n, p);
+    }
+
+    hospital.sort();
+    hospital.display();
+
+    return 0;
+}

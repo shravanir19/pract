@@ -1,0 +1,115 @@
+#include<iostream>
+#include<string.h>
+#include<fstream>
+using namespace std;
+int main()
+{
+    ifstream fin;
+	ofstream fout;
+	char name[30],ph[15],str[30];
+	int choice,result,flag;
+    
+    do{
+    	
+    	cout<<"
+
+
+
+$$$$ MENU $$$$"; 
+		cout<<"
+1.Add record"; 
+        cout<<"
+2.Delete record"; 
+        cout<<"
+3.Display all"; 
+        cout<<"
+4.Exit"; 
+        
+        cout<<"
+
+Enter Choice ? ";
+        cin>>choice;
+        
+        switch(choice)
+        {
+        	case 1:fout.open("Record.txt",ios::app);
+        	       cout<<"
+Enter name & phone number : ";
+        	       cin>>name>>ph;
+        	       fout<<"
+"<<name<<"\t"<<ph;
+        	       cout<<"
+Inserted Record !!";
+        	       fout.close();
+        	       break;
+        	case 2:fin.open("Record.txt");
+        	       if(fin==0)
+        	       {
+        	       	  cout<<"
+Add Record First !!!";
+        	       	  break;
+				   }
+				   fout.open("Temp.txt");
+				   cout<<"
+Enter name for delete record : ";
+				   cin>>str;
+				   flag=0;
+				   while(1)
+				   {
+				   	  fin>>name>>ph;
+			   	    
+				   	  result=stricmp(name,str);
+				   	  if(result==0)
+				   	     flag=1;
+				   	  else
+				   	     fout<<"
+"<<name<<"\t"<<ph;
+				   	     
+				   	  if(fin.eof())
+				   	     break;
+				   }
+				   if(flag==0)
+				      cout<<str<<" Record Not Found !!!";
+				   else
+				      cout<<str<<" Record Deleted !!!";
+				      
+				    fin.close();
+				    fout.close();
+				    remove("Record.txt");
+				    rename("Temp.txt","Record.txt");
+			       break;
+			case 3:fin.open("Record.txt");
+			       if(fin==0)
+			       {
+			       	  cout<<"
+Add record First !!!";
+			       	  break;
+				   }
+				   cout<<"
+Name\tPhone_no
+";
+				   while(1)
+				   {
+				   	  fin>>name>>ph;
+		     
+				   	  cout<<"
+"<<name<<"\t"<<ph;
+				   	  
+				   	  if(fin.eof())
+				   	     break;
+				   	  
+				   }
+				   fin.close();
+				   break;   
+		    case 4:cout<<"
+Thanks for using !!!";
+			       break;
+		    default:cout<<"
+Invalid Choice !!!";
+			        break;     		  
+		}
+    	
+	}while(choice!=4);
+	
+	return 0;
+}

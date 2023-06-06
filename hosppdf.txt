@@ -1,0 +1,53 @@
+#include<iostream>
+#include<queue>
+using namespace std;
+struct Patient{
+string name;
+int priority;
+};
+//overloading the operator "<"
+bool operator < (const Patient& a, const Patient& b) {
+return a.priority < b.priority;
+}
+int main() {
+priority_queue<Patient> q; //created a priority queue of data type Patient and objec "q"
+int choice;
+do{
+cout<<"\n 1. Add Patient";
+cout<<"\n 2. Serve Patient";
+cout<<"\n 3. Exit";
+cout<<"\n Enter Your Choice: ";
+cin>>choice;
+switch(choice) {
+case 1:{
+Patient p;//created object of the struct patient to access its data
+cout<<"\n Enter patient's name: ";
+cin>>p.name;
+cout<<"\n Enter patient priority (1 - Serious, 2 -Non-Serious, 3 - General Checkup): ";
+cin>>p.priority;
+q.push(p);
+cout<<"\n Patient added successfully.";
+break;
+}
+case 2:{
+if(q.empty()) {
+cout<<"\n No patients in the queue.";
+} else {
+cout<<"\n Serving patient: "<<q.top().name;
+q.pop();
+}
+break;
+}
+case 3:{
+cout<<"\n Exiting the program...";
+exit(0);
+break;
+}
+default:{
+cout<<"\n Error! Invalid choice";
+break;
+}
+}
+}while(choice != 3);
+return 0;
+}
